@@ -21,6 +21,17 @@ OpenID Connect strategy for OmniAuth
       token_endpoint: "/token",
       userinfo_endpoint: "/userinfo"
     }
+    option :scope, [:openid]
+    option :response_type, "code"
+    option :state
+    option :response_mode
+    option :display, nil#, [:page, :popup, :touch, :wap]
+    option :prompt, nil#, [:none, :login, :consent, :select_account]
+    option :max_age
+    option :ui_locales
+    option :id_token_hint
+    option :login_hint
+    option :acr_values
 
 ## Installation
 
