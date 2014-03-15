@@ -9,6 +9,19 @@ OpenID Connect strategy for OmniAuth
 
 `provider :openid_connect, hostname, clientid, client secret, {additional parms}`
 
+
+    option :client_options, {
+      identifier: nil,
+      secret: nil,
+      redirect_uri: nil,
+      scheme: "https",
+      host: nil,
+      port: 443,
+      authorization_endpoint: "/authorize",
+      token_endpoint: "/token",
+      userinfo_endpoint: "/userinfo"
+    }
+
 ## Installation
 
 Add this line to your application's Gemfile:
