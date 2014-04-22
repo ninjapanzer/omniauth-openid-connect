@@ -6,33 +6,6 @@ OpenID Connect strategy for OmniAuth
 [![Coverage Status](https://coveralls.io/repos/jjbohn/omniauth-openid-connect/badge.png?branch=master)](https://coveralls.io/r/jjbohn/omniauth-openid-connect?branch=master)
 [![Code Climate](https://codeclimate.com/github/jjbohn/omniauth-openid-connect.png)](https://codeclimate.com/github/jjbohn/omniauth-openid-connect)
 
-
-`provider :openid_connect, hostname, clientid, client secret, {additional parms}`
-
-
-    option :client_options, {
-      identifier: nil,
-      secret: nil,
-      redirect_uri: nil,
-      scheme: "https",
-      host: nil,
-      port: 443,
-      authorization_endpoint: "/authorize",
-      token_endpoint: "/token",
-      userinfo_endpoint: "/userinfo"
-    }
-    option :scope, [:openid]
-    option :response_type, "code"
-    option :state
-    option :response_mode
-    option :display, nil#, [:page, :popup, :touch, :wap]
-    option :prompt, nil#, [:none, :login, :consent, :select_account]
-    option :max_age
-    option :ui_locales
-    option :id_token_hint
-    option :login_hint
-    option :acr_values
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -49,7 +22,28 @@ Or install it yourself as:
 
 ## Usage
 
-Example configuration
+### Example configurations
+
+#### Static Client Registration
+
+```ruby
+config.omniauth :openid_connect, {
+  name: :my_provider,
+  scope: [:openid, :email, :profile, :address],
+  response_type: :code,
+  client_options: {
+    port: 443,
+    scheme: "https",
+    host: "myprovider.com",
+    identifier: ENV["OP_CLIENT_ID"],
+    secret: ENV["OP_SECRET_KEY"],
+    redirect_uri: "http://myapp.com/users/auth/openid_connect/callback"
+  },
+}
+```
+
+#### Dynamic Client Registrstion
+
 ```ruby
 config.omniauth :openid_connect, {
   name: :my_provider,
@@ -62,6 +56,8 @@ config.omniauth :openid_connect, {
     identifier: ENV["OP_CLIENT_ID"],
     secret: ENV["OP_SECRET_KEY"],
     redirect_uri: "http://myapp.com/users/auth/openid_connect/callback",
+    dynamic_client: true,
+    redirect_urls: ["https://idp.somehting.magic/registration"]
   },
 }
 ```

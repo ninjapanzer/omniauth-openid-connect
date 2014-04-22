@@ -17,7 +17,9 @@ module OmniAuth
         port: 443,
         authorization_endpoint: "/authorize",
         token_endpoint: "/token",
-        userinfo_endpoint: "/userinfo"
+        userinfo_endpoint: "/userinfo",
+        registration_endpoint: "/registration",
+        dynamic_client: false
       }
       option :scope, [:openid]
       option :response_type, "code"
@@ -55,6 +57,7 @@ module OmniAuth
       end
 
       def client
+        return @client ||= registrar.register! if client_options[:dynamic_client]
         @client ||= ::OpenIDConnect::Client.new(client_options)
       end
 
@@ -94,6 +97,12 @@ module OmniAuth
 
       def client_options
         options.client_options
+      end
+
+      def registrar
+        @registrar ||= OpenIDConnect::Client::Registrar.new(
+                        client_options[:registration_endpoint],
+                        {redirect_urls: [client_options[:redirect_urls]]})
       end
 
       def nonce
