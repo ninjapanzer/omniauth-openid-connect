@@ -31,6 +31,7 @@ config.omniauth :openid_connect, {
   name: :my_provider,
   scope: [:openid, :email, :profile, :address],
   response_type: :code,
+  login_uri: 'http://auth',
   client_options: {
     port: 443,
     scheme: "https",
@@ -49,6 +50,7 @@ config.omniauth :openid_connect, {
   name: :my_provider,
   scope: [:openid, :email, :profile, :address],
   response_type: :code,
+  login_uri: 'http://auth',
   client_options: {
     port: 443,
     scheme: "https",

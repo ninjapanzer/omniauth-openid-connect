@@ -18,6 +18,7 @@ module OmniAuth
         authorization_endpoint: "/authorize",
         token_endpoint: "/token",
         userinfo_endpoint: "/userinfo",
+        redirect_uri: '/callback',
         registration_endpoint: "/registration",
         dynamic_client: false
       }
@@ -29,6 +30,7 @@ module OmniAuth
       option :prompt, nil#, [:none, :login, :consent, :select_account]
       option :max_age
       option :ui_locales
+      option :login_uri, nil
       option :id_token_hint
       option :login_hint
       option :acr_values
@@ -62,7 +64,7 @@ module OmniAuth
       end
 
       def request_phase
-        redirect authorize_uri
+        redirect login_uri
       end
 
       def callback_phase
